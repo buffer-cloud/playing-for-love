@@ -4,7 +4,7 @@ chapters.forEach(b=>b.onclick=()=>{seek(Number(b.dataset.time));film.play().catc
 const target=Number(new URLSearchParams(location.search).get('t'));if(target>0){if(film.readyState>=1)seek(target);else film.addEventListener('loadedmetadata',()=>seek(target),{once:true});}
 film.addEventListener('timeupdate',()=>{let active=chapters[0];chapters.forEach(b=>{if(Number(b.dataset.time)<=film.currentTime)active=b});chapters.forEach(b=>b.setAttribute('aria-current',String(b===active)));});
 function captionState(){const on=film.textTracks[0]?.mode==='showing';caption.textContent='English captions: '+(on?'on':'off');caption.setAttribute('aria-pressed',on)}
-caption.onclick=()=>{if(film.textTracks[0])film.textTracks[0].mode=film.textTracks[0].mode==='showing'?'hidden':'showing';captionState()};film.textTracks.addEventListener('change',captionState);
+caption.onclick=()=>{if(film.textTracks[0])film.textTracks[0].mode=film.textTracks[0].mode==='showing'?'hidden':'showing';captionState()};film.textTracks.addEventListener('change',captionState);film.addEventListener('loadedmetadata',captionState);captionState();
 
 const cinemaButton=document.getElementById('cinema-toggle'),player=document.querySelector('.cinema-player');
 let cinemaOpen=false,previousFocus=null,previousScroll=0;
